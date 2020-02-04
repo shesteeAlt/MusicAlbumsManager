@@ -1,6 +1,5 @@
 package com.shestee.dao;
 
-import com.shestee.entity.Album;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
 import com.shestee.interfaces.AlbumService;
@@ -17,17 +16,13 @@ import java.sql.*;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 public class AlbumDao {
     private Connection connection;
-    private static String filename = "C:\\Moje\\Nauka programowania\\java\\inne_pliki\\plyty_xls.xlsx";
+    private static String filename = "src/main/resources/plyty.xlsx";
     private final String databaseName = "management";
-    private final String tableName = "albums";
     private final String user = "shestee";
     private final String password = "admin";
-    private AlbumService albumService = AlbumServiceImpl.getInstance();
 
     private static AlbumDao instance = null;
 
@@ -166,7 +161,8 @@ public class AlbumDao {
 
 
     public void addSongsFromXCLsheet() {
-        List<Album> albums = albumService.getAllAlbums();
+        AlbumService albumService = AlbumServiceImpl.getInstance();
+
         int batchSize = 20;
 
         connection = null;

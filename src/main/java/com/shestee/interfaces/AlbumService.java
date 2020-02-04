@@ -4,9 +4,7 @@ import com.shestee.entity.Album;
 import com.shestee.entity.Song;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
-import org.apache.poi.ss.formula.functions.T;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface AlbumService {
@@ -30,13 +28,11 @@ public interface AlbumService {
 
     public void addAlbum(Album album);
 
-    //void removeAlbumById(int id);
-
     public int getIdByOwnId(int ownId);
 
     public List<Song> getSongsFromAlbum(int id);
 
-    public void deleteSongsFromAlbum(int id);
+    public void removeAlbum(int id);
 
     public void viewAlbums(List<Album> albums);
 }

@@ -180,17 +180,6 @@ public class AlbumServiceImpl implements AlbumService {
         session.close();
     }
 
-    /*@Override
-    void removeAlbumById(int id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-
-        session.delete(findById(id));
-
-        transaction.commit();
-        session.close();
-    }*/
-
     @Override
     public List<Song> getSongsFromAlbum(int id) {
         Album album = findById(id);
@@ -208,7 +197,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public void deleteSongsFromAlbum(int id) {
+    public void removeAlbum(int id) {
         Album album = findById(id);
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -220,8 +209,6 @@ public class AlbumServiceImpl implements AlbumService {
 
         transaction.commit();
         session.close();
-
-        //removeAlbumById(id);
     }
 
     public void viewAlbums(List<Album> albums) {

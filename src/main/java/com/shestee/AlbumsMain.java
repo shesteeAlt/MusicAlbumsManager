@@ -4,7 +4,6 @@ package com.shestee;
 
 
 import com.shestee.dao.AlbumDao;
-import com.shestee.entity.Song;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
 import com.shestee.interfaces.AlbumService;
@@ -12,9 +11,7 @@ import com.shestee.interfaces.SongService;
 import com.shestee.service.AlbumServiceImpl;
 import com.shestee.entity.Album;
 import com.shestee.service.SongServiceImpl;
-import com.shestee.utils.SortingUtils;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class AlbumsMain {
@@ -63,6 +60,7 @@ public class AlbumsMain {
 
 
     public static void main(String[] args) {
+        System.getProperty("java.classpath");
         Scanner scanner = new Scanner(System.in);
         boolean appOn = true;
 
@@ -136,8 +134,6 @@ public class AlbumsMain {
                         System.out.println("Enter id number of album: ");
                         int id = Integer.parseInt(scanner.nextLine());
                         songService.viewSongs(albumService.getSongsFromAlbum(id));
-                        /*List<Song> songs = albumService.getSongsFromAlbum(id);
-                        songs.forEach(System.out::println);*/
                         break;
                     case "0":
                         inSearchAlbumMenu = false;
@@ -238,7 +234,7 @@ public class AlbumsMain {
                             System.out.print("Are you sure? (y)es/(n)o: ");
                             switch (scanner.nextLine()) {
                                 case "y":
-                                    albumService.deleteSongsFromAlbum(idToRemove);
+                                    albumService.removeAlbum(idToRemove);
                                     break;
                                 default:
                                     System.out.println("The album was not deleted");

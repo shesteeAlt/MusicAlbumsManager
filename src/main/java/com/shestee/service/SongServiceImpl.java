@@ -131,15 +131,10 @@ public class SongServiceImpl implements SongService {
 
     public List<Song> findByArtist (String artist) {
         AlbumService albumService = AlbumServiceImpl.getInstance();
-        SongService songService = SongServiceImpl.getInstance();
         List<Album> albums = albumService.findByArtist(artist);
-        List<Song> songs = null;
         List<Song> resultSongs = new ArrayList<>();
         for (Album a: albums) {
-            songs = albumService.getSongsFromAlbum(a.getId());
-            for (Song s: songs) {
-                resultSongs.add(s);
-            }
+            resultSongs.addAll(albumService.getSongsFromAlbum(a.getId()));
         }
         return resultSongs;
     }
