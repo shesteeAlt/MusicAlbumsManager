@@ -30,6 +30,11 @@ public class Song {
     public Song() {
     }
 
+    public Song(String trackNumber, String title) {
+        this.trackNumber = trackNumber;
+        this.title = title;
+    }
+
     public Song(int id, String trackNumber, String title, String music, String lyrics, int albumId) {
         this.id = id;
         this.trackNumber = trackNumber;

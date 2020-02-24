@@ -5,7 +5,9 @@ import com.shestee.entity.Song;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
 import com.shestee.interfaces.AlbumService;
+import com.shestee.parsers.AlbumJsonParser;
 import com.shestee.utils.HibernateUtil;
+import com.shestee.utils.JsonUtil;
 import com.shestee.utils.SortingUtils;
 
 import org.hibernate.Session;
@@ -212,8 +214,6 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     public void viewAlbums(List<Album> albums) {
-        //1
-        //String albumTitle;
         for (int i=0; i<125; i++) {
             System.out.print("-");
         }
@@ -226,7 +226,6 @@ public class AlbumServiceImpl implements AlbumService {
         System.out.println("");
 
         for(Album album: albums){
-            //albumTitle = album.getTitle().length() >40 ?  album.getTitle().substring(0, 36) + "..." : album.getTitle();
             System.out.format("%5d %30s %40s %20s %15s %8d",
                     album.getId(),
                     album.getArtist(),
@@ -239,18 +238,13 @@ public class AlbumServiceImpl implements AlbumService {
         System.out.println("");
     }
 
-    /*public boolean deleteById(Serializable id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        Object persistentInstance = session.load(Album.class, id);
-        if (persistentInstance != null) {
-            session.delete(persistentInstance);
-            transaction.commit();
-            session.close();
-            return true;
+    @Override
+    public void addAllSongsToAlbum(int albumId, String releaseID) {
+        SongServiceImpl songService = SongServiceImpl.getInstance();
+        List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(JsonUtil.getAlbumJson(releaseID));
+        for (Song song: songs) {
+            song.setAlbumId(albumId);
+            songService.addSong(song);
         }
-        transaction.commit();
-        session.close();
-        return false;
-    }*/
+    }
 }

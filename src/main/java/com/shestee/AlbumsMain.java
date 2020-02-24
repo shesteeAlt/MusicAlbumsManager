@@ -1,16 +1,16 @@
 package com.shestee;
 
-//import com.shestee.dao.AlbumDao;
-
-
 import com.shestee.dao.AlbumDao;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
 import com.shestee.interfaces.AlbumService;
 import com.shestee.interfaces.SongService;
+import com.shestee.parsers.AlbumJsonParser;
 import com.shestee.service.AlbumServiceImpl;
 import com.shestee.entity.Album;
 import com.shestee.service.SongServiceImpl;
+import com.shestee.utils.JsonUtil;
+import org.json.JSONException;
 
 import java.util.Scanner;
 
@@ -54,7 +54,9 @@ public class AlbumsMain {
         System.out.println("Add/Remove menu");
         System.out.println("---------------");
         System.out.println("1 - Add album");
-        System.out.println("2 - Remove album");
+        System.out.println("2 - Add album by Discogs release id");
+        System.out.println("3 - Remove album");
+        System.out.println("4 - Add songs to album");
         System.out.println("0 - Quit to main menu");
     }
 
@@ -212,19 +214,43 @@ public class AlbumsMain {
                         System.out.print("Enter catalogue number of the album: ");
                         album.setCatalogueNumber(scanner.nextLine());
                         System.out.print("Enter issue year of the album: ");
-                        album.setYear(Integer.parseInt(scanner.nextLine()));
+
+                        try {
+                            album.setYear(Integer.parseInt(scanner.nextLine()));
+                        } catch (NumberFormatException e) {
+                            album.setYear(0);
+                            System.out.println("Wrong year format. Year set to 0.");
+                        }
                         System.out.print("Do you want to add following album? (y)es/(n)o: ");
                         System.out.println(album.toString());
-                        switch(scanner.nextLine()) {
-                            case "y":
-                                albumService.addAlbum(album);
-                                break;
-                            default:
-                                System.out.println("The album was not added");
-                                break;
+                        if ("y".equals(scanner.nextLine())) {
+                            albumService.addAlbum(album);
+                        } else {
+                            System.out.println("The album was not added");
                         }
                         break;
                     case "2":
+                        System.out.println("Enter Discogs release id of album you want to be added:");
+                        String discogsReleaseId = scanner.nextLine();
+                        try {
+                            Album albumToAdd = AlbumJsonParser.parseAlbumFromAlbumJson(JsonUtil.getAlbumJson(discogsReleaseId));
+                            System.out.print("Do you want to add following album? (y)es/(n)o: ");
+                            System.out.println(albumToAdd.toString());
+                            if ("y".equals(scanner.nextLine())) {
+                                albumService.addAlbum(albumToAdd);
+                                albumToAdd.getId();
+                                albumService.addAllSongsToAlbum(albumToAdd.getId(), discogsReleaseId);
+                                System.out.println("The album was added");
+                            } else {
+                                System.out.println("The album was not added");
+                            }
+                        }   catch (JSONException e) {
+                            System.out.println("Wrong release_id");
+                        }
+
+                        break;
+
+                    case "3":
                         System.out.print("Enter id number of the album you want to be removed: ");
                         int idToRemove;
                         try {
@@ -232,16 +258,37 @@ public class AlbumsMain {
                             System.out.println("The album you want to be removed is:");
                             System.out.println(albumService.findById(idToRemove).toString());
                             System.out.print("Are you sure? (y)es/(n)o: ");
-                            switch (scanner.nextLine()) {
-                                case "y":
-                                    albumService.removeAlbum(idToRemove);
-                                    break;
-                                default:
-                                    System.out.println("The album was not deleted");
-                                    break;
+                            if ("y".equals(scanner.nextLine())) {
+                                albumService.removeAlbum(idToRemove);
+                            } else {
+                                System.out.println("The album was not deleted");
                             }
                         } catch (NumberFormatException e) {
                             System.out.println("Enter proper id number");
+                        }
+                        break;
+                    case "4":
+                        System.out.println("Enter id number of the album you want to add songs to: ");
+                        int idToAddSongs = Integer.parseInt(scanner.nextLine());
+                        Album tempAlbum = albumService.findById(idToAddSongs);
+                        System.out.println("You want to add songs to album:");
+                        System.out.println(tempAlbum.toString());
+                        if (albumService.getSongsFromAlbum(idToAddSongs).size() == 0) {
+                            System.out.println("The album doesn't contain any songs");
+                        } else if (albumService.getSongsFromAlbum(idToAddSongs).size() >0) {
+                            System.out.println(("The album already contains songs: "));
+                            songService.viewSongs(albumService.getSongsFromAlbum(idToAddSongs));
+                        }
+                        System.out.println("Are you sure you want to add songs?");
+                        switch (scanner.nextLine()) {
+                            case "y":
+                                System.out.println("Enter release id from discogs");
+                                String releaseId = scanner.nextLine();
+                                albumService.addAllSongsToAlbum(idToAddSongs, releaseId);
+                                break;
+                            default:
+                                System.out.println("You didn't add any song.");
+                                break;
                         }
 
                         break;

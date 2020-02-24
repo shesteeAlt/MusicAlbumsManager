@@ -35,4 +35,6 @@ public interface AlbumService {
     public void removeAlbum(int id);
 
     public void viewAlbums(List<Album> albums);
+
+    public void addAllSongsToAlbum(int albumId, String releaseID);
 }
