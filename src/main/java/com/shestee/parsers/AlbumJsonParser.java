@@ -20,14 +20,24 @@ public class AlbumJsonParser {
         JSONArray formats = jsonObject.getJSONArray("formats");
         parsedAlbum.setArtist(jsonObject.getString("artists_sort"));
         parsedAlbum.setTitle(jsonObject.getString("title"));
-        parsedAlbum.setCatalogueNumber(labels.getJSONObject(0).getString("catno"));
+        //parsedAlbum.setCatalogueNumber(labels.getJSONObject(0).getString("catno"));
+        String catNo = "";
+        for (int i=0; i<labels.length(); i++) {
+            if (i == labels.length()-1) {
+                catNo += labels.getJSONObject(i).getString("catno");
+            } else {
+                catNo += labels.getJSONObject(i).getString("catno") + ", ";
+            }
+        }
+        parsedAlbum.setCatalogueNumber(catNo);
 
         String genreStr = "";
         for (int i = 0; i < genres.length() ; i++) {
-            if (i == genres.length()-1)
+            if (i == genres.length()-1) {
                 genreStr += genres.getString(i);
-            else
+            } else {
                 genreStr += genres.getString(i) + ", ";
+            }
         }
 
         parsedAlbum.setGenre(genreStr);

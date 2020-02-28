@@ -218,7 +218,7 @@ public class AlbumServiceImpl implements AlbumService {
             System.out.print("-");
         }
         System.out.println("");
-        System.out.printf("%5s %30s %40s %20s %15s %8s", "ID", "ARTIST", "TITLE", "GENRE", "CATALOGUE No.", "YEAR");
+        System.out.printf("%5s %30s %40s %20s %12s %15s %8s", "ID", "ARTIST", "TITLE", "GENRE", "FORMAT", "CATALOGUE No.", "YEAR");
         System.out.println();
         for (int i=0; i<125; i++) {
             System.out.print("-");
@@ -226,11 +226,12 @@ public class AlbumServiceImpl implements AlbumService {
         System.out.println("");
 
         for(Album album: albums){
-            System.out.format("%5d %30s %40s %20s %15s %8d",
+            System.out.format("%5d %30s %40s %20s %12s %15s %8d",
                     album.getId(),
-                    album.getArtist(),
+                    album.getArtist().length() >30 ? album.getArtist().substring(0, 26) + "..." : album.getArtist(),
                     album.getTitle().length() >40 ? album.getTitle().substring(0, 36) + "..." : album.getTitle(),
                     album.getGenre().length() >20 ? album.getGenre().substring(0, 16) + "..." : album.getGenre(),
+                    album.getMedium().toString(),
                     album.getCatalogueNumber(),
                     album.getYear());
             System.out.println();

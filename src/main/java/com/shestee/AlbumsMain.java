@@ -245,6 +245,7 @@ public class AlbumsMain {
                                 System.out.println("The album was not added");
                             }
                         }   catch (JSONException e) {
+                            e.printStackTrace();
                             System.out.println("Wrong release_id");
                         }
 
