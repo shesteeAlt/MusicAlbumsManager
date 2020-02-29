@@ -214,13 +214,13 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     public void viewAlbums(List<Album> albums) {
-        for (int i=0; i<125; i++) {
+        for (int i=0; i<139; i++) {
             System.out.print("-");
         }
         System.out.println("");
         System.out.printf("%5s %30s %40s %20s %12s %15s %8s", "ID", "ARTIST", "TITLE", "GENRE", "FORMAT", "CATALOGUE No.", "YEAR");
         System.out.println();
-        for (int i=0; i<125; i++) {
+        for (int i=0; i<139; i++) {
             System.out.print("-");
         }
         System.out.println("");

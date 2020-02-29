@@ -20,9 +20,8 @@ import java.util.Iterator;
 public class AlbumDao {
     private Connection connection;
     private static String filename = "src/main/resources/plyty.xlsx";
-    private final String databaseName = "management";
-    private final String user = "shestee";
-    private final String password = "admin";
+    private final String user = "sa";
+    private final String password = "";
 
     private static AlbumDao instance = null;
 
@@ -51,7 +50,7 @@ public class AlbumDao {
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
 
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/"+databaseName+"?useSSL=false",
+            connection = DriverManager.getConnection("jdbc:h2:file:C:\\Moje\\intellijProjects\\MusicAlbumManager\\db",
                     user, password);
             connection.setAutoCommit(false);
 
@@ -176,7 +175,7 @@ public class AlbumDao {
             Sheet firstSheet = workbook.getSheetAt(1);
             Iterator<Row> rowIterator = firstSheet.iterator();
 
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/"+databaseName+"?useSSL=false",
+            connection = DriverManager.getConnection("jdbc:h2:file:C:\\Moje\\intellijProjects\\MusicAlbumManager\\db",
                     user, password);
             connection.setAutoCommit(false);
 
