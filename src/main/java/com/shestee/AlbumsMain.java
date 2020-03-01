@@ -266,6 +266,8 @@ public class AlbumsMain {
                             }
                         } catch (NumberFormatException e) {
                             System.out.println("Enter proper id number");
+                        } catch (NullPointerException e) {
+                            System.out.println("Provided id doesn't exist");
                         }
                         break;
                     case "4":
