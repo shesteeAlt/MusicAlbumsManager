@@ -6,7 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class JsonUtil {
-    public static String getAlbumJson(String releaseId) {
+    public String getAlbumJson(String releaseId) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.discogs.com/releases/" + releaseId))

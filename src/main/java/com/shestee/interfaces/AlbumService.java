@@ -8,33 +8,33 @@ import com.shestee.entity.enums.Medium;
 import java.util.List;
 
 public interface AlbumService {
-    public List<Album> getAllAlbums();
+    List<Album> getAllAlbums();
 
-    public List<Album> findByArtist(String artist);
+    List<Album> findByArtist(String artist);
 
-    public Album findById(int id);
+    Album findById(int id);
 
-    public List<Album> findByTitle(String title);
+    List<Album> findByTitle(String title);
 
-    public List<Album> findByYear(int year);
+    List<Album> findByYear(int year);
 
-    public Album findByCatalogueNumber(String catalogue);
+    Album findByCatalogueNumber(String catalogue);
 
-    public List<Album> findByMedium(Medium medium);
+    List<Album> findByMedium(Medium medium);
 
-    public List<Album> findByLengthType(LengthType lengthType);
+    List<Album> findByLengthType(LengthType lengthType);
 
-    public List<Album> findByGenre(String genre);
+    List<Album> findByGenre(String genre);
 
-    public void addAlbum(Album album);
+    void addAlbum(Album album);
 
-    public int getIdByOwnId(int ownId);
+    int getIdByOwnId(int ownId);
 
-    public List<Song> getSongsFromAlbum(int id);
+    List<Song> getSongsFromAlbum(int id);
 
-    public void removeAlbum(int id);
+    void removeAlbum(int id);
 
-    public void viewAlbums(List<Album> albums);
+    void viewAlbums(List<Album> albums);
 
-    public void addAllSongsToAlbum(int albumId, String releaseID);
+    void addAllSongsToAlbum(int albumId, String releaseID);
 }

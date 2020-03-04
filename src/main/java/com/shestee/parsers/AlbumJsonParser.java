@@ -4,6 +4,7 @@ import com.shestee.entity.Album;
 import com.shestee.entity.Song;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
+import com.shestee.utils.JsonUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumJsonParser {
-    public static Album parseAlbumFromAlbumJson(String response) {
+    public Album parseAlbumFromAlbumJson(String discogsReleaseId) {
+        JsonUtil jsonUtil = new JsonUtil();
         Album parsedAlbum = new Album();
+        String response = jsonUtil.getAlbumJson(discogsReleaseId);
 
         JSONObject jsonObject = new JSONObject(response);
         JSONArray labels = jsonObject.getJSONArray("labels");

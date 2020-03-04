@@ -22,7 +22,7 @@ import java.util.List;
 public class AlbumServiceImpl implements AlbumService {
     private static AlbumServiceImpl instance = null;
 
-    private AlbumServiceImpl() {
+    public AlbumServiceImpl() {
 
     }
 
@@ -242,7 +242,9 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public void addAllSongsToAlbum(int albumId, String releaseID) {
         SongServiceImpl songService = SongServiceImpl.getInstance();
-        List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(JsonUtil.getAlbumJson(releaseID));
+        JsonUtil jsonUtil = new JsonUtil();
+
+        List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(jsonUtil.getAlbumJson(releaseID));
         for (Song song: songs) {
             song.setAlbumId(albumId);
             songService.addSong(song);

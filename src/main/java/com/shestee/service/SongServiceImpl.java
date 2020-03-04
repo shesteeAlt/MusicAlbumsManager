@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class SongServiceImpl implements SongService {
     private static SongServiceImpl instance = null;
 
-    private SongServiceImpl() {
+    public SongServiceImpl() {
     }
 
     public static SongServiceImpl getInstance() {
@@ -166,25 +166,4 @@ public class SongServiceImpl implements SongService {
     public void viewSongInfoById(int id) {
 
     }
-
-
-
-
-    /*@Override
-    public List<Song> findSongsByArtist(String artist) {
-        AlbumService albumService = AlbumServiceImpl.getInstance();
-        Album album = albumService.findByArtist(artist).stream().findFirst().get();
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-
-        Query query = session.createQuery("Select s from Song s where s.album.id = :id");
-        query.setParameter("id", id);
-        List<Song> songs = query.getResultList();
-
-        transaction.commit();
-        session.close();
-
-        return songs;
-    }*/
 }
