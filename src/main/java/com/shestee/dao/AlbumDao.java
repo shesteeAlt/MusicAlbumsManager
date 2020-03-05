@@ -50,8 +50,7 @@ public class AlbumDao {
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
 
-            connection = DriverManager.getConnection("jdbc:h2:file:C:\\Moje\\intellijProjects\\MusicAlbumManager\\db",
-                    user, password);
+            connection = DriverManager.getConnection("jdbc:h2:file:./db", user, password);
             connection.setAutoCommit(false);
 
             String sql = "INSERT INTO albums (artist, title, medium, length_type, genre, label, catalogue, year, own_id) " +
@@ -175,8 +174,7 @@ public class AlbumDao {
             Sheet firstSheet = workbook.getSheetAt(1);
             Iterator<Row> rowIterator = firstSheet.iterator();
 
-            connection = DriverManager.getConnection("jdbc:h2:file:C:\\Moje\\intellijProjects\\MusicAlbumManager\\db",
-                    user, password);
+            connection = DriverManager.getConnection("jdbc:h2:file:./db", user, password);
             connection.setAutoCommit(false);
 
             String sql = "INSERT INTO songs (track_number, title, music, lyrics, album_id) " +

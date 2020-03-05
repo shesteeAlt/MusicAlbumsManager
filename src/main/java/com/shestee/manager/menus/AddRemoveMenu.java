@@ -38,39 +38,13 @@ public class AddRemoveMenu extends Menu {
                 album.setArtist(cli.readLine());
                 System.out.print("Enter title of the album: ");
                 album.setTitle(cli.readLine());
+
                 System.out.print("Enter number of source type: (1)VINYL, (2)CD, (3)CASSETTE, (4)FILES: ");
-                switch (cli.readLine()) {
-                    case "1":
-                        album.setMedium(Medium.VINYL);
-                        break;
-                    case "2":
-                        album.setMedium(Medium.CD);
-                        break;
-                    case "3":
-                        album.setMedium(Medium.CASSETTE);
-                        break;
-                    case "4":
-                        album.setMedium(Medium.FILES);
-                        break;
-                    default:
-                        album.setMedium(Medium.OTHER);
-                        break;
-                }
+                chooseMedium(cli, album);
+
                 System.out.print("Enter number of a type of the album; (1)LP, (2)EP, (3)SINGLE, (4)OTHER: ");
-                switch (cli.readLine()) {
-                    case "1":
-                        album.setLengthType(LengthType.LP);
-                        break;
-                    case "2":
-                        album.setLengthType(LengthType.EP);
-                        break;
-                    case "3":
-                        album.setLengthType(LengthType.SINGLE);
-                        break;
-                    case "4":
-                        album.setLengthType(LengthType.OTHER);
-                        break;
-                }
+                chooseLengthType(cli, album);
+
                 System.out.print("Enter genre of the album: ");
                 album.setGenre(cli.readLine());
                 System.out.print("Enter publisher label: ");
@@ -163,6 +137,44 @@ public class AddRemoveMenu extends Menu {
                 break;
             case "0":
                 this.setInMenu(false);
+                break;
+        }
+    }
+
+
+    private void chooseLengthType(Cli cli, Album album) {
+        switch (cli.readLine()) {
+            case "1":
+                album.setLengthType(LengthType.LP);
+                break;
+            case "2":
+                album.setLengthType(LengthType.EP);
+                break;
+            case "3":
+                album.setLengthType(LengthType.SINGLE);
+                break;
+            case "4":
+                album.setLengthType(LengthType.OTHER);
+                break;
+        }
+    }
+
+    private void chooseMedium(Cli cli, Album album) {
+        switch (cli.readLine()) {
+            case "1":
+                album.setMedium(Medium.VINYL);
+                break;
+            case "2":
+                album.setMedium(Medium.CD);
+                break;
+            case "3":
+                album.setMedium(Medium.CASSETTE);
+                break;
+            case "4":
+                album.setMedium(Medium.FILES);
+                break;
+            default:
+                album.setMedium(Medium.OTHER);
                 break;
         }
     }
