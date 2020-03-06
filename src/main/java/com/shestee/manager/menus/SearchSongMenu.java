@@ -24,8 +24,8 @@ public class SearchSongMenu extends Menu {
         switch (cli.readLine()) {
             case "1":
                 cli.println("Enter title of the song (or part of it): ");
-                //String title = cli.readLine();
-                //songService.viewSongs(songService.findByTitle(title));
+                String title = cli.readLine();
+                songService.viewSongs(songService.findByTitle(title));
                 break;
             case "2":
                 cli.println("Enter artist (or part): ");

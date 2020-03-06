@@ -40,6 +40,7 @@ public class MainMenu extends Menu {
                 break;
             case "0":
                 this.setInMenu(false);
+                cli.println("Bye!");
                 break;
             case "import from excel":
                 albumDao.copyFromXclToDB(cli);
