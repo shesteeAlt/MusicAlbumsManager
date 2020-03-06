@@ -42,8 +42,8 @@ public class MainMenu extends Menu {
                 this.setInMenu(false);
                 break;
             case "import from excel":
-                albumDao.copyFromXclToDB();
-                albumDao.addSongsFromXCLsheet();
+                albumDao.copyFromXclToDB(cli);
+                albumDao.addSongsFromXCLsheet(cli);
                 break;
         }
     }

@@ -34,103 +34,103 @@ public class AddRemoveMenu extends Menu {
         switch (cli.readLine()) {
             case "1":
                 Album album = new Album();
-                System.out.print("Enter artist name: ");
+                cli.print("Enter artist name: ");
                 album.setArtist(cli.readLine());
-                System.out.print("Enter title of the album: ");
+                cli.print("Enter title of the album: ");
                 album.setTitle(cli.readLine());
 
-                System.out.print("Enter number of source type: (1)VINYL, (2)CD, (3)CASSETTE, (4)FILES: ");
+                cli.print("Enter number of source type: (1)VINYL, (2)CD, (3)CASSETTE, (4)FILES: ");
                 chooseMedium(cli, album);
 
-                System.out.print("Enter number of a type of the album; (1)LP, (2)EP, (3)SINGLE, (4)OTHER: ");
+                cli.print("Enter number of a type of the album; (1)LP, (2)EP, (3)SINGLE, (4)OTHER: ");
                 chooseLengthType(cli, album);
 
-                System.out.print("Enter genre of the album: ");
+                cli.print("Enter genre of the album: ");
                 album.setGenre(cli.readLine());
-                System.out.print("Enter publisher label: ");
+                cli.print("Enter publisher label: ");
                 album.setLabel(cli.readLine());
-                System.out.print("Enter catalogue number of the album: ");
+                cli.print("Enter catalogue number of the album: ");
                 album.setCatalogueNumber(cli.readLine());
-                System.out.print("Enter issue year of the album: ");
+                cli.print("Enter issue year of the album: ");
 
                 try {
                     album.setYear(Integer.parseInt(cli.readLine()));
                 } catch (NumberFormatException e) {
                     album.setYear(0);
-                    System.out.println("Wrong year format. Year set to 0.");
+                    cli.println("Wrong year format. Year set to 0.");
                 }
-                System.out.print("Do you want to add following album? (y)es/(n)o: ");
-                System.out.println(album.toString());
+                cli.print("Do you want to add following album? (y)es/(n)o: ");
+                cli.println(album.toString());
 
                 if ("y".equals(cli.readLine())) {
                     albumService.addAlbum(album);
                 } else {
-                    System.out.println("The album was not added");
+                    cli.println("The album was not added");
                 }
                 break;
             case "2":
-                System.out.println("Enter Discogs release id of album you want to be added:");
+                cli.println("Enter Discogs release id of album you want to be added:");
                 String discogsReleaseId = cli.readLine();
                 try {
                     AlbumJsonParser albumJsonParser = new AlbumJsonParser();
                     Album albumToAdd = albumJsonParser.parseAlbumFromAlbumJson(discogsReleaseId);
-                    System.out.print("Do you want to add following album? (y)es/(n)o: ");
-                    System.out.println(albumToAdd.toString());
+                    cli.print("Do you want to add following album? (y)es/(n)o: ");
+                    cli.println(albumToAdd.toString());
                     if ("y".equals(cli.readLine())) {
                         albumService.addAlbum(albumToAdd);
                         albumToAdd.getId();
                         albumService.addAllSongsToAlbum(albumToAdd.getId(), discogsReleaseId);
-                        System.out.println("The album was added");
+                        cli.println("The album was added");
                     } else {
-                        System.out.println("The album was not added");
+                        cli.println("The album was not added");
                     }
                 }   catch (JSONException e) {
                     e.printStackTrace();
-                    System.out.println("Wrong release_id");
+                    cli.println("Wrong release_id");
                 }
 
                 break;
 
             case "3":
-                System.out.print("Enter id number of the album you want to be removed: ");
+                cli.print("Enter id number of the album you want to be removed: ");
                 int idToRemove;
                 try {
                     idToRemove = Integer.parseInt(cli.readLine());
-                    System.out.println("The album you want to be removed is:");
-                    System.out.println(albumService.findById(idToRemove).toString());
-                    System.out.print("Are you sure? (y)es/(n)o: ");
+                    cli.println("The album you want to be removed is:");
+                    cli.println(albumService.findById(idToRemove).toString());
+                    cli.print("Are you sure? (y)es/(n)o: ");
                     if ("y".equals(cli.readLine())) {
                         albumService.removeAlbum(idToRemove);
                     } else {
-                        System.out.println("The album was not deleted");
+                        cli.println("The album was not deleted");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Enter proper id number");
+                    cli.println("Enter proper id number");
                 } catch (NullPointerException e) {
-                    System.out.println("Provided id doesn't exist");
+                    cli.println("Provided id doesn't exist");
                 }
                 break;
             case "4":
-                System.out.println("Enter id number of the album you want to add songs to: ");
+                cli.println("Enter id number of the album you want to add songs to: ");
                 int idToAddSongs = Integer.parseInt(cli.readLine());
                 Album tempAlbum = albumService.findById(idToAddSongs);
-                System.out.println("You want to add songs to album:");
-                System.out.println(tempAlbum.toString());
+                cli.println("You want to add songs to album:");
+                cli.println(tempAlbum.toString());
                 if (albumService.getSongsFromAlbum(idToAddSongs).size() == 0) {
-                    System.out.println("The album doesn't contain any songs");
+                    cli.println("The album doesn't contain any songs");
                 } else if (albumService.getSongsFromAlbum(idToAddSongs).size() >0) {
-                    System.out.println(("The album already contains songs: "));
+                    cli.println(("The album already contains songs: "));
                     songService.viewSongs(albumService.getSongsFromAlbum(idToAddSongs));
                 }
-                System.out.println("Are you sure you want to add songs?");
+                cli.println("Are you sure you want to add songs?");
                 switch (cli.readLine()) {
                     case "y":
-                        System.out.println("Enter release id from discogs");
+                        cli.println("Enter release id from discogs");
                         String releaseId = cli.readLine();
                         albumService.addAllSongsToAlbum(idToAddSongs, releaseId);
                         break;
                     default:
-                        System.out.println("You didn't add any song.");
+                        cli.println("You didn't add any song.");
                         break;
                 }
 
@@ -179,4 +179,3 @@ public class AddRemoveMenu extends Menu {
         }
     }
 }
-

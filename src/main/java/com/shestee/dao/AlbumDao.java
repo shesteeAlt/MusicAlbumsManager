@@ -3,6 +3,7 @@ package com.shestee.dao;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
 import com.shestee.interfaces.AlbumService;
+import com.shestee.interfaces.Cli;
 import com.shestee.service.AlbumServiceImpl;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,7 +37,7 @@ public class AlbumDao {
         return instance;
     }
 
-    public void copyFromXclToDB() {
+    public void copyFromXclToDB(Cli cli) {
         int batchSize = 20;
 
         connection = null;
@@ -146,19 +147,19 @@ public class AlbumDao {
             connection.close();
 
             long end = System.currentTimeMillis();
-            System.out.printf("Import done in %d ms\n", (end - start));
+            cli.printf("Import done in %d ms\n", (end - start));
 
         } catch (IOException ex1) {
-            System.out.println("Error reading file");
+            cli.println("Error reading file");
             ex1.printStackTrace();
         } catch (SQLException ex2) {
-            System.out.println("Database error");
+            cli.println("Database error");
             ex2.printStackTrace();
         }
     }
 
 
-    public void addSongsFromXCLsheet() {
+    public void addSongsFromXCLsheet(Cli cli) {
         AlbumService albumService = AlbumServiceImpl.getInstance();
 
         int batchSize = 20;
@@ -242,13 +243,13 @@ public class AlbumDao {
             connection.close();
 
             long end = System.currentTimeMillis();
-            System.out.printf("Import done in %d ms\n", (end - start));
+            cli.printf("Import done in %d ms\n", (end - start));
 
         } catch (IOException ex1) {
-            System.out.println("Error reading file");
+            cli.println("Error reading file");
             ex1.printStackTrace();
         } catch (SQLException ex2) {
-            System.out.println("Database error");
+            cli.println("Database error");
             ex2.printStackTrace();
         }
     }
