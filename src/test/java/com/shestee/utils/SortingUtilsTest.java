@@ -18,7 +18,7 @@ class SortingUtilsTest {
         Album album2 = new Album();
         album2.setArtist("Metallica");
         Album album3 = new Album();
-        album3.setArtist("Ścianka");
+        album3.setArtist("Stone Temple Pilots");
         List<Album> albums = Arrays.asList(album1, album2, album3);
 
         //when
