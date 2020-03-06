@@ -12,7 +12,7 @@ public class CliUtil implements Cli {
     private final LinkedList<String> inputs;
     private final List<String> outputs = new LinkedList<>();
 
-    private CliUtil(String ... input) {
+    public CliUtil(String... input) {
         inputs = new LinkedList<>(asList(input));
     }
 

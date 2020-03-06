@@ -24,7 +24,7 @@ public class MainMenu extends Menu {
     public void chooseOption(Cli cli) {
         switch (cli.readLine()) {
             case "1":
-                albumService.viewAlbums(albumService.getAllAlbums());
+                albumService.viewAlbums(cli, albumService.getAllAlbums());
                 break;
             case "2":
                 SearchAlbumMenu searchAlbumMenu = new SearchAlbumMenu();

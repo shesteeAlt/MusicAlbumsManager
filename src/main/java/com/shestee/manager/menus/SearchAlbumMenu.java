@@ -30,23 +30,23 @@ public class SearchAlbumMenu extends Menu {
             case "1":
                 cli.print("Enter artist name (or part of it): ");
                 String artist = cli.readLine();
-                albumService.viewAlbums(albumService.findByArtist(artist));
+                albumService.viewAlbums(cli, albumService.findByArtist(artist));
                 break;
             case "2":
                 cli.println("Enter album title (or part of it): ");
                 String title = cli.readLine();
-                albumService.viewAlbums(albumService.findByTitle(title));
+                albumService.viewAlbums(cli, albumService.findByTitle(title));
                 break;
             case "3":
                 cli.println("Enter genre: ");
                 String genre = cli.readLine();
-                albumService.viewAlbums(albumService.findByGenre(genre));
+                albumService.viewAlbums(cli, albumService.findByGenre(genre));
                 break;
             case "4":
                 try {
                     cli.println("Enter a year: ");
                     int year = Integer.parseInt(cli.readLine());
-                    albumService.viewAlbums(albumService.findByYear(year));
+                    albumService.viewAlbums(cli, albumService.findByYear(year));
                 } catch (NumberFormatException e) {
                     cli.println("Please enter a valid year");
                     cli.println("");

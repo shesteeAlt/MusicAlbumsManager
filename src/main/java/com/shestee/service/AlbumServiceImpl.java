@@ -1,10 +1,12 @@
 package com.shestee.service;
 
+import com.shestee.CliImpl;
 import com.shestee.entity.Album;
 import com.shestee.entity.Song;
 import com.shestee.entity.enums.LengthType;
 import com.shestee.entity.enums.Medium;
 import com.shestee.interfaces.AlbumService;
+import com.shestee.interfaces.Cli;
 import com.shestee.parsers.AlbumJsonParser;
 import com.shestee.utils.HibernateUtil;
 import com.shestee.utils.JsonUtil;
@@ -20,6 +22,7 @@ import java.util.List;
 
 
 public class AlbumServiceImpl implements AlbumService {
+    Cli cli = new CliImpl();
     private static AlbumServiceImpl instance = null;
 
     public AlbumServiceImpl() {
@@ -213,30 +216,34 @@ public class AlbumServiceImpl implements AlbumService {
         session.close();
     }
 
-    public void viewAlbums(List<Album> albums) {
+    public void viewAlbums(Cli cli, List<Album> albums) {
         for (int i=0; i<139; i++) {
-            System.out.print("-");
+            cli.print("-");
         }
-        System.out.println("");
-        System.out.printf("%5s %30s %40s %20s %12s %15s %8s", "ID", "ARTIST", "TITLE", "GENRE", "FORMAT", "CATALOGUE No.", "YEAR");
-        System.out.println();
+        cli.println("");
+        cli.printf("%5s %30s %40s %20s %12s %15s %8s", "ID", "ARTIST", "TITLE", "GENRE", "FORMAT", "CATALOGUE No.", "YEAR");
+        cli.println("");
         for (int i=0; i<139; i++) {
-            System.out.print("-");
+            cli.print("-");
         }
-        System.out.println("");
+        cli.println("");
 
-        for(Album album: albums){
-            System.out.format("%5d %30s %40s %20s %12s %15s %8d",
-                    album.getId(),
-                    album.getArtist().length() >30 ? album.getArtist().substring(0, 26) + "..." : album.getArtist(),
-                    album.getTitle().length() >40 ? album.getTitle().substring(0, 36) + "..." : album.getTitle(),
-                    album.getGenre().length() >20 ? album.getGenre().substring(0, 16) + "..." : album.getGenre(),
-                    album.getMedium().toString(),
-                    album.getCatalogueNumber(),
-                    album.getYear());
-            System.out.println();
+        if (albums.size() == 0) {
+            cli.println("There is no album to view");
+        } else {
+            for(Album album: albums){
+                System.out.format("%5d %30s %40s %20s %12s %15s %8d",
+                        album.getId(),
+                        album.getArtist().length() >30 ? album.getArtist().substring(0, 26) + "..." : album.getArtist(),
+                        album.getTitle().length() >40 ? album.getTitle().substring(0, 36) + "..." : album.getTitle(),
+                        album.getGenre().length() >20 ? album.getGenre().substring(0, 16) + "..." : album.getGenre(),
+                        album.getMedium().toString(),
+                        album.getCatalogueNumber(),
+                        album.getYear());
+                cli.println("");
+            }
+            cli.println("");
         }
-        System.out.println("");
     }
 
     @Override
